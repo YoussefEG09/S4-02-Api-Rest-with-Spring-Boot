@@ -1,6 +1,7 @@
 package cat.itacademy.s04.s02.n01.fruit.services;
 
 import cat.itacademy.s04.s02.n01.fruit.dto.FruitDTO;
+import cat.itacademy.s04.s02.n01.fruit.dto.FruitResponseDTO;
 import cat.itacademy.s04.s02.n01.fruit.model.Fruit;
 import cat.itacademy.s04.s02.n01.fruit.repository.FruitRepository;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ public class FruitServiceImplTest {
 
         when(fruitRepository.save(any(Fruit.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Fruit fruit = fruitService.createFruit(new FruitDTO(name, weightInKg));
+        FruitResponseDTO fruit = fruitService.createFruit(new FruitDTO(name, weightInKg));
 
         assertNotNull(fruit);
         assertEquals(name, fruit.getName());
@@ -49,7 +50,7 @@ public class FruitServiceImplTest {
         when(fruitRepository.findById(1L)).thenReturn(Optional.of(fruit));
         when(fruitRepository.save(any(Fruit.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Fruit updated = fruitService.updateFruit(1L, new FruitDTO("Melon", 3));
+        FruitResponseDTO updated = fruitService.updateFruit(1L, new FruitDTO("Melon", 3));
 
         assertEquals("Melon", updated.getName());
         assertEquals(3, updated.getWeightInKg());
@@ -75,7 +76,7 @@ public class FruitServiceImplTest {
 
         when(fruitRepository.findById(1L)).thenReturn(Optional.of(fruit));
 
-        Fruit result = fruitService.getFruitById(1L);
+        FruitResponseDTO result = fruitService.getFruitById(1L);
 
         assertNotNull(result);
         assertEquals("Watermelon", result.getName());
@@ -91,7 +92,7 @@ public class FruitServiceImplTest {
 
         when(fruitRepository.findAll()).thenReturn(Arrays.asList(f1, f2));
 
-        List<Fruit> fruits = fruitService.getAllFruits();
+        List<FruitResponseDTO> fruits = fruitService.getAllFruits();
 
         assertEquals(2, fruits.size());
         assertEquals("Watermelon", fruits.get(0).getName());
